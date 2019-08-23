@@ -95,10 +95,12 @@ docker container exec -it ubuntu bash
 
 # Docker networks
 
-Show the networks.
+1. The **ls** command for a network will list all the docker networks.
 ```
 docker network ls
 ```
+
+When the **netwok ls** command is executed for the first time, the following three default networks will be listed.
 
 **Bridge**: The default network driver. If you don’t specify a driver, this is the type of network you are creating. Bridge networks are usually used when your applications run in standalone containers that need to communicate.
 
@@ -106,22 +108,32 @@ docker network ls
 
 **none**: For this container, disable all networking. Usually used in conjunction with a custom network driver. none is not available for swarm services.
 
-Inspect a network.
+2. **inspect** command is used to get information on a specific network.
 ```
 docker network inspect bridge
 ```
 
-Create a network.
+3. **network create** command is used to create a new network. By default the newly created network will be attached to the **bridge** driver.
 ```
-docker network create --driver
-```
-
-Attach a network to the container.
-```
-docker network connect
+docker network create my_network
 ```
 
-Detach a network from the container.
+**--driver** command is used to attach the network to a particular driver.
 ```
-docker network disconnect
+docker network create my_network1 --driver bridge
+```
+
+4. While creating a new container it can be attached to a particular network using the **--network** command.
+```
+docker container run -d -p 80:80 --network my_network --name nginx_new nginx
+```
+
+5. **connect** command is used to connect an existing container to a network. One container can be connected to multiple networks.
+```
+docker network connect my_network nginx2
+```
+
+6. **disconnect** command is used to remove a container from the connected network.
+```
+docker network disconnect my_network nginx2
 ```
