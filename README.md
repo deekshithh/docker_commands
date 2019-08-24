@@ -55,7 +55,7 @@ docker container logs --details cool_mclaren
 docker container logs --follow cool_mclaren
 ```
 
-# Getting container details
+## Getting container details
 
 List all the processes running on a single container.
 ```
@@ -76,7 +76,7 @@ docker container stats mynginx
 ```
 docker container port mynginx
 ```
-# Getting inside a shell in containers
+## Getting inside a container
 
 **run -it** will start a new ubuntu container interactively. Once excuted the command will open an interactive ubuntu command line. Similar to SSH.
 ```
@@ -93,9 +93,9 @@ docker container start -ai ubuntu
 docker container exec -it ubuntu bash
 ```
 
-# Docker networks
+## Docker networks
 
-1. The **ls** command for a network will list all the docker networks.
+The **ls** command for a network will list all the docker networks.
 ```
 docker network ls
 ```
@@ -108,12 +108,12 @@ When the **netwok ls** command is executed for the first time, the following thr
 
 **none**: For this container, disable all networking. Usually used in conjunction with a custom network driver. none is not available for swarm services.
 
-2. **inspect** command is used to get information on a specific network.
+**inspect** command is used to get information on a specific network.
 ```
 docker network inspect bridge
 ```
 
-3. **network create** command is used to create a new network. By default the newly created network will be attached to the **bridge** driver.
+**network create** command is used to create a new network. By default the newly created network will be attached to the **bridge** driver.
 ```
 docker network create my_network
 ```
@@ -123,17 +123,35 @@ docker network create my_network
 docker network create my_network1 --driver bridge
 ```
 
-4. While creating a new container it can be attached to a particular network using the **--network** command.
+While creating a new container it can be attached to a particular network using the **--network** command.
 ```
 docker container run -d -p 80:80 --network my_network --name nginx_new nginx
 ```
 
-5. **connect** command is used to connect an existing container to a network. One container can be connected to multiple networks.
+**connect** command is used to connect an existing container to a network. One container can be connected to multiple networks.
 ```
 docker network connect my_network nginx2
 ```
 
-6. **disconnect** command is used to remove a container from the connected network.
+**disconnect** command is used to remove a container from the connected network.
 ```
 docker network disconnect my_network nginx2
+```
+
+#### DNS
+
+Containers shouldn't rely on IP's for inter-communication. Hence the Docker daemon has a built-in DNS server that containers use by default. Docker defaults the hostname to the container's name, but you can also set aliases.
+
+For example, create two nginx containers and connect them to the same network.
+```
+docker container run -d -p 80:80 --network my_network --name nginx1 nginx
+docker container run -d -p 8080:80 --network my_network --name nginx2 nginx
+```
+
+Get into one container and you should be able to call the other conatainer using the container name.
+```
+docker container exec -it nginx1 bash
+apt-get update
+apt-get install curl
+curl nginx2
 ```
