@@ -37,6 +37,16 @@ The **RM** requires a container ID to remove a specific conainer.
 docker container rm [container_id]
 ```
 
+If the container is running then the **rm -f** command is used to force the commnader to remove.
+```
+docker container rm -f boring_soloe
+```
+
+The **run --rm** will help in cleaning up the containers once the command is executed.
+```
+docker container run --rm centos curl -s search:9200
+```
+
 The **STOP** command is used to stop the container.
 ```
 docker container stop [container_id]
@@ -76,6 +86,8 @@ docker container stats mynginx
 ```
 docker container port mynginx
 ```
+
+
 ## Getting inside a container
 
 **run -it** will start a new ubuntu container interactively. Once excuted the command will open an interactive ubuntu command line. Similar to SSH.
@@ -154,4 +166,31 @@ docker container exec -it nginx1 bash
 apt-get update
 apt-get install curl
 curl nginx2
+```
+
+#### DNS Round Robin Test
+
+Round-robin DNS is a load balancing technique where the balancing is done by a type of DNS server called an authoritative nameserver, rather than using a dedicated piece of load-balancing hardware. Round-robin DNS can be used when a website or service has their content hosted on several redundant web servers; when the DNS authoritative nameserver is queried for an IP address, the server hands out a different address each time, operating on a rotation. This is particularly useful when the redundant web servers are geographically separated, making traditional load-balancing difficult. Round-robin is known for it’s ease of implementation, but it also has strong drawbacks.
+
+We can implement DNS round robin in docker using **--net-alias** command.
+
+For example, create a new network.
+```
+docker network create my_network
+```
+
+Run two elasticsearch container in the same network with an alias called search.
+```
+docker container run -d --network my_network --network-alias search elasticsearch:2
+docker container run -d --network my_network --network-alias search elasticsearch:2
+```
+
+Using the alpine container we can look up for the ip addresses and the corresponding domain names of the containers in the network.
+```
+docker container run --rm --net my_network alpine nslookup search
+```
+
+When you curl the 'search' domain it will different elasticsearch containers each time.
+```
+docker container run --rm --network my_network centos curl -s search:9200
 ```
