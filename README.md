@@ -37,12 +37,12 @@ The **RM** requires a container ID to remove a specific conainer.
 docker container rm [container_id]
 ```
 
-If the container is running then the **rm -f** command is used to force the commnader to remove.
+If the container is running then the **rm -f** can be used to forcely delete the container.
 ```
 docker container rm -f boring_soloe
 ```
 
-The **run --rm** will help in cleaning up the containers once the command is executed.
+**run --rm** command will help in cleaning up the container, once the command is executed.
 ```
 docker container run --rm centos curl -s search:9200
 ```
@@ -179,18 +179,18 @@ For example, create a new network.
 docker network create my_network
 ```
 
-Run two elasticsearch container in the same network with an alias called search.
+Run two elasticsearch containers in the same network with a network alias 'search'.
 ```
 docker container run -d --network my_network --network-alias search elasticsearch:2
 docker container run -d --network my_network --network-alias search elasticsearch:2
 ```
 
-Using the alpine container we can look up for the ip addresses and the corresponding domain names of the containers in the network.
+Using the alpine container we can check the ip addresses and the corresponding domain names of the containers in the network.
 ```
 docker container run --rm --net my_network alpine nslookup search
 ```
 
-When you curl the 'search' domain it will different elasticsearch containers each time.
+When you curl the 'search' domain it will point to different elasticsearch containers during each request.
 ```
 docker container run --rm --network my_network centos curl -s search:9200
 ```
