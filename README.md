@@ -194,3 +194,14 @@ When you curl the 'search' domain it will point to different elasticsearch conta
 ```
 docker container run --rm --network my_network centos curl -s search:9200
 ```
+
+## Images
+
+An Image is an ordered collection of root filesystem changes and the corresponding execution parameters for use within a container runtime. This specification outlines the format of these filesystem changes and corresponding parameters and describes how to create and use them for use with a container runtime and execution tool.
+
+In simple words,
+* App binaries and dependencies.
+* Metadata about the image data and how to run the image.
+* Not a complete OS. No kernel.
+* Host provides the kernel. This is one of the major distinction between docker and VM.
+
