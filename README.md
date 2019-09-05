@@ -205,3 +205,10 @@ In simple words,
 * Not a complete OS. No kernel.
 * Host provides the kernel. This is one of the major distinction between docker and VM.
 
+```
+docker image ls
+```
+
+```
+docker image pull nginx:1.11.9-alpine
+```
