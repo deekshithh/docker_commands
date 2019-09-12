@@ -205,10 +205,24 @@ In simple words,
 * Not a complete OS. No kernel.
 * Host provides the kernel. This is one of the major distinction between docker and VM.
 
+**image ls** command is used to list all the images in the system.
 ```
 docker image ls
 ```
 
+**image pull** command pulls the specicific image from the docker hub.
 ```
 docker image pull nginx:1.11.9-alpine
 ```
+
+```
+docker image inspect nginx:latest
+```
+#### Image layers
+
+**history** show the layers of changes made in a docker image.
+```
+docker history nginx:latest
+```
+
+#### Copy on write(COW)
