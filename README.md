@@ -220,7 +220,7 @@ docker image inspect nginx:latest
 ```
 #### Image layers
 
-**history** show the layers of changes made in a docker image.
+The command **docker history** shows the layers of changes made in a docker image.
 ```
 docker history nginx:latest
 ```
