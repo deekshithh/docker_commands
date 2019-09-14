@@ -214,11 +214,13 @@ docker image ls
 ```
 docker image pull nginx:1.11.9-alpine
 ```
-
+**image inspect** command displays detailed information on one or more images.
 ```
 docker image inspect nginx:latest
 ```
 #### Image layers
+
+A Docker image consists of several layers. Each layer corresponds to certain instructions in your Dockerfile. The following instructions create a layer: RUN, COPY, ADD. The other instructions will create intermediate layers and do not influence the size of your image.
 
 The command **docker history** shows the layers of changes made in a docker image.
 ```
@@ -226,3 +228,7 @@ docker history nginx:latest
 ```
 
 #### Copy on write(COW)
+When we launch an image, the Docker engine does not make a full copy of the already stored image. Instead, it uses something called the copy-on-write mechanism. This is a standard UNIX pattern that provides a single shared copy of some data, until the data is modified.
+
+To do this, changes between the image and the running container are tracked. Just before any write operation is performed in the running container, a copy of the file that would be modified is placed on the writeable layer of the container, and that is where the write operation takes place. Hence the name, “copy-on-write”. [Read more..](https://blog.codeship.com/docker-storage-introduction/)
+
