@@ -195,6 +195,24 @@ When you curl the 'search' domain it will point to different elasticsearch conta
 docker container run --rm --network my_network centos curl -s search:9200
 ```
 
+## Docker login
+Imagine you made your own Docker image and would like to share it with the world you can sign up for an account on https://hub.docker.com/. After verifying your email you are ready to go and upload your first docker image.
+
+The command **docker login** is used to Log in to a Docker registry.
+```
+docker login
+```
+
+The authentication details of all the logged in docker registries is stored in the **.docker/config.json** file.
+```
+cat ~/.docker/config.json
+```
+
+An user can logout from a registry using **docker logout** command.
+```
+docker logout
+```
+
 ## Images
 
 An Image is an ordered collection of root filesystem changes and the corresponding execution parameters for use within a container runtime. This specification outlines the format of these filesystem changes and corresponding parameters and describes how to create and use them for use with a container runtime and execution tool.
@@ -218,8 +236,8 @@ docker image pull nginx:1.11.9-alpine
 ```
 docker image inspect nginx:latest
 ```
-#### Image layers
 
+#### Image layers
 A Docker image consists of several layers. Each layer corresponds to certain instructions in your Dockerfile. The following instructions create a layer: RUN, COPY, ADD. The other instructions will create intermediate layers and do not influence the size of your image.
 
 The command **docker history** shows the layers of changes made in a docker image.
@@ -232,3 +250,35 @@ When we launch an image, the Docker engine does not make a full copy of the alre
 
 To do this, changes between the image and the running container are tracked. Just before any write operation is performed in the running container, a copy of the file that would be modified is placed on the writeable layer of the container, and that is where the write operation takes place. Hence the name, “copy-on-write”. [Read more..](https://blog.codeship.com/docker-storage-introduction/)
 
+#### Image tag
+
+***docker image** command retags the existing docker images. It creates a image with same image id and new repository name.
+```
+docker image tag nginx deekshithh/nginx:0.1
+```
+
+**image push** command is used to push the image to docker hub.
+```
+docker image push deekshithh/nginx
+```
+
+#### Building images and DockerFile
+FROM, ENV, RUN, EXPOSE, CMD
+
+Example: create a Dockerfile.
+```
+FROM alpine:3.4
+
+RUN apk update
+RUN apk add vim
+RUN apk add git
+```
+
+Run the following command in the same folder to build the image.
+```
+docker image build -t deek-alpine .
+```
+
+```
+docker image build -f deek.Dockerfile -t deek-alpine .
+```
