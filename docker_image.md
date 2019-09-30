@@ -128,19 +128,3 @@ The command **docker image build -f** is used to create am image from a specific
 ```
 docker image build -f deek.Dockerfile -t deek-alpine .
 ```
-
-#### Keep Your Docker System Clean
-
-You can use **prune** commands to clean up images, volumes, build cache, and containers.
-
-```
-docker system df
-```
-
-```
-docker image prune
-```
-
-```
-docker system prune -a
-```
