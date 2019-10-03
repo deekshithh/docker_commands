@@ -1,14 +1,13 @@
 ## Docker Persistent Data
 
-Docker is immutable and short-lived.
-
-Two ways to store the persestent data; volumes and Bind Mounts.
-
-### Seperation of concerns
+Docker is immutable and short-lived.The data doesn’t persist when that container no longer exists, and it can be difficult to get the data out of the container if another process needs it.
+A container’s writable layer is tightly coupled to the host machine where the container is running. You can’t easily move the data somewhere else.
+Writing into a container’s writable layer requires a storage driver to manage the filesystem. The storage driver provides a union filesystem, using the Linux kernel. This extra abstraction reduces performance as compared to using data volumes, which write directly to the host filesystem.
+Docker has two options for containers to store files in the host machine, so that the files are persisted even after the container stops: volumes, and bind mounts. This way docker features ensures the **separation of concerns**.
 
 ## Volumes
- Volumes make special locations outside of containers union file system(UFS).
-
+Volumes make special locations outside of containers union file system(UFS).
+Volumes are stored in a part of the host filesystem which is managed by Docker (/var/lib/docker/volumes/ on Linux). Non-Docker processes should not modify this part of the filesystem. Volumes are the best way to persist data in Docker.
 Removing a container doesn't remove the volume. Volumes require manual deletion.
 
 ```
@@ -99,5 +98,9 @@ docker volume inspect mysql-data
 
 
 ## Bind Mounts
-Link container path to host path
+Bind Mounts link container path to host path. Bind mounts may be stored anywhere on the host system. They may even be important system files or directories. Non-Docker processes on the Docker host or a Docker container can modify them at any time.
+
+```
+docker container run -d -p 80:80 -v ${pwd}:/usr/share/nginx/html deek-nginx
+```
 
