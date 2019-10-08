@@ -59,7 +59,7 @@ docker container run -d --name mysql-test -v mysql-db:/var/lib/mysql -e MYSQL_AL
 ```
 
 ```
-docker inspect mysql-db
+docker volume inspect mysql-db
 
 
 [
@@ -101,6 +101,24 @@ docker volume inspect mysql-data
 Bind Mounts link container path to host path. Bind mounts may be stored anywhere on the host system. They may even be important system files or directories. Non-Docker processes on the Docker host or a Docker container can modify them at any time.
 
 ```
-docker container run -d -p 80:80 -v ${pwd}:/usr/share/nginx/html deek-nginx
+pwd
+
+/Users/deekshith.h/project/bind-mount
+```
+
+```
+touch readme.txt
+```
+
+```
+docker container run -d -p 80:80 -v /Users/deekshith.h/project/bind-mount:/usr/share/nginx/html deek-nginx
+```
+
+```
+docker container exec musing_carson ls
+
+Dockerfile
+index.html
+readme.txt
 ```
 
