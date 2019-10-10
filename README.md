@@ -16,6 +16,12 @@ Apartments (Docker containers) also offer protection from unwanted guests, but t
 
 Docker containers share the underlying resources of the Docker host. Furthermore, developers build a Docker image that includes exactly what they need to run their application: starting with the basics and adding in only what is needed by the application.
 
+## Sections
+1. Containers
+2. Networks
+3. Images
+4. Volumes and Bind Mounts
+5. Docker Compose
 
 ## Docker login
 Imagine you made your own Docker image and would like to share it with the world you can sign up for an account on https://hub.docker.com/. After verifying your email you are ready to go and upload your first docker image.
