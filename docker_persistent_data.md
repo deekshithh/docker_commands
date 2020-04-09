@@ -112,6 +112,8 @@ touch readme.txt
 
 ```
 docker container run -d -p 80:80 -v /Users/deekshith.h/project/bind-mount:/usr/share/nginx/html deek-nginx
+
+docker container run -it -v $(pwd):/new_folder  ruby:2.7.1-alpine /bin/sh
 ```
 
 ```
